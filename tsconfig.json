@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    "target": "ES2016",
+    "module": "commonjs",
+    "jsx": "react-native",
+    "lib": ["es6", "esnext.asynciterable"],
+    "strict": true,
+    "esModuleInterop": true,
+    "rootDir": ".",
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "noUnusedLocals": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@screens": ["./src/screens"],
+      "@base": ["./src/base"],
+      "@components": ["./src/components"],
+      "@contexts": ["./src/contexts"],
+      "@styles": ["./src/styles"],
+      "@assets/*": ["./src/assets/*"],
+      "@graphql/*": ["./src/graphql/*"],
+      "@graphql": ["./src/graphql"],
+      "@services": ["./src/services"],
+      "@hooks": ["./src/hooks"],
+      "@constants": ["./src/constants"],
+      "@types": ["./src/types"],
+      "@utils": ["./src/utils"],
+      "@navigation": ["./src/navigation"]
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "babel.config.js",
+    "metro.config.js",
+    "jest.config.js"
+  ]
+}

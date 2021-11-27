@@ -1,0 +1,32 @@
+## extensions
+*.*
+!*.graphql
+!*.js
+!*.json
+!*.md
+!*.ts
+!*.tsx
+!*.yml
+
+CHANGELOG
+LICENSE
+
+# dependencies
+/node_modules
+/__tests__
+/android
+/ios
+/debug.log
+/.pnp
+.pnp.js
+/yarn.lock
+/package-lock.json
+
+
+# misc
+.env
+
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
