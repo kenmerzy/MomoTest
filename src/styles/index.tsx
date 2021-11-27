@@ -1,3 +1,3 @@
-export const colors = {
-  WHITE: '#FFFFFF',
-};
+export * from './typos';
+export * from './colors';
+export * from './responsive';
