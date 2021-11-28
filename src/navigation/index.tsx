@@ -3,6 +3,7 @@ import { RootStack } from './navigator';
 import { renderAuthStack } from './renderAuth';
 import { renderHome } from './renderHome';
 import { AuthContext } from '@contexts';
+import { StyleSheet } from 'react-native';
 
 export * from './navigator';
 
@@ -14,6 +15,9 @@ export const RootApp = () => {
   }
 
   const renderScreen = () => {
+    console.log('===============================================');
+    console.log('state', state);
+    console.log('===============================================');
     if (!state?.user) {
       return renderAuthStack();
     } else {
@@ -27,6 +31,7 @@ export const RootApp = () => {
         const {} = props;
         return {
           headerShown: false,
+          headerStyle: styles.headerStyle,
           title: '',
         };
       }}
@@ -35,3 +40,6 @@ export const RootApp = () => {
     </RootStack.Navigator>
   );
 };
+const styles = StyleSheet.create({
+  headerStyle: {},
+});

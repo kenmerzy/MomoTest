@@ -3,31 +3,18 @@ import { useEffect, useMemo, useReducer } from 'react';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SInfo from 'react-native-sensitive-info';
-// import SplashScreen from 'react-native-splash-screen';
 
 import { AsyncStorageKey, SInfoOptions } from '@constants';
 import { AuthState, IUser } from '@types';
 
 interface AuthAction {
-  type:
-    | 'INIT'
-    | 'FIRST'
-    | 'SIGN_IN'
-    | 'SIGN_OUT'
-    | 'UPDATE_USER'
-    | 'BAD_REQUEST';
+  type: 'INIT' | 'SIGN_IN' | 'SIGN_OUT';
   user?: IUser | Partial<IUser>;
   badRequest?: boolean;
 }
 
 const authReducer = (prevState: AuthState, action: AuthAction): AuthState => {
   switch (action.type) {
-    case 'FIRST':
-      return {
-        ...prevState,
-        isFirstTime: true,
-        loading: false,
-      };
     case 'INIT':
       return {
         ...prevState,
@@ -41,20 +28,11 @@ const authReducer = (prevState: AuthState, action: AuthAction): AuthState => {
         user: action.user as IUser,
         loading: false,
       };
-    case 'UPDATE_USER':
-      return {
-        ...prevState,
-        user: { ...prevState.user, ...action.user } as IUser,
-      };
+
     case 'SIGN_OUT':
       return {
         ...prevState,
         user: undefined,
-      };
-    case 'BAD_REQUEST':
-      return {
-        ...prevState,
-        badRequest: action?.badRequest || false,
       };
   }
 };
@@ -71,23 +49,15 @@ export const useAuth = () => {
   useEffect(() => {
     const bootstrapAsync = async () => {
       try {
-        const isFirstTime = await AsyncStorage.getItem(AsyncStorageKey.INIT);
-        if (!isFirstTime) {
-          dispatch({ type: 'FIRST' });
-          // SplashScreen.hide();
-          return;
-        }
         const token = await SInfo.getItem('token', SInfoOptions);
         const userString = await AsyncStorage.getItem(
           AsyncStorageKey.USER_INFO,
         );
         if (token && userString) {
           dispatch({ type: 'SIGN_IN', user: JSON.parse(userString) });
-          // SplashScreen.hide();
           return;
         } else if (state.isFirstTime) {
           dispatch({ type: 'INIT' });
-          // SplashScreen.hide();
         }
       } catch (error) {
         dispatch({ type: 'SIGN_OUT' });
@@ -112,16 +82,10 @@ export const useAuth = () => {
         await AsyncStorage.removeItem(AsyncStorageKey.USER_INFO);
         dispatch({ type: 'SIGN_OUT' });
       },
-      updateUser: async (user: Partial<IUser>) => {
-        dispatch({ type: 'UPDATE_USER', user: { ...user } });
-      },
       init: async (callBack?: () => void) => {
         await AsyncStorage.setItem(AsyncStorageKey.INIT, JSON.stringify(true));
         dispatch({ type: 'INIT' });
         callBack && callBack();
-      },
-      setBadRequest: (show: boolean) => {
-        dispatch({ type: 'BAD_REQUEST', badRequest: show });
       },
     }),
     [],
